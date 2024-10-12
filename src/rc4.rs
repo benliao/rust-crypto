@@ -43,6 +43,16 @@ impl Rc4 {
         let k = self.state[(self.state[self.i as usize].wrapping_add(self.state[self.j as usize])) as usize];
         k
     }
+    pub fn reset(&mut self, key: &[u8]){
+        for (i, x) in self.state.iter_mut().enumerate() {
+            *x = i as u8;
+        }
+        let mut j: u8 = 0;
+        for i in 0..256 {
+            j = j.wrapping_add(self.state[i]).wrapping_add(key[i % key.len()]);
+            self.state.swap(i, j as usize);
+        }
+    }
 }
 
 impl SynchronousStreamCipher for Rc4 {
