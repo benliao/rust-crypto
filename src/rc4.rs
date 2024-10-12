@@ -55,6 +55,12 @@ impl Rc4 {
             self.state.swap(i, j as usize);
         }
     }
+
+    pub fn inout_process(&mut self, inout: &mut [u8]){
+        for x in inout.iter_mut(){
+            *x = *x ^ self.next();
+        }
+    }
 }
 
 impl SynchronousStreamCipher for Rc4 {
