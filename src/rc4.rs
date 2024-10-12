@@ -44,6 +44,8 @@ impl Rc4 {
         k
     }
     pub fn reset(&mut self, key: &[u8]){
+        self.i = 0;
+        self.j = 0;
         for (i, x) in self.state.iter_mut().enumerate() {
             *x = i as u8;
         }
